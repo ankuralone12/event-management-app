@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="form-container">
+    <h2 class="header">Add Event</h2>
+
+    <form method="POST" action="{{ url_for('events.add_event') }}">
+        
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="3" required></textarea>
+
+        <label for="date">Date:</label>
+<input type="date" id="date" name="date" min="{{ today_date }}" required>
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <!-- Add spacing before buttons -->
+        <div class="button-row">
+            <button type="submit" class="btn blue">Add Event</button>
+            <a href="{{ url_for('events.event_list') }}" class="btn gray">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

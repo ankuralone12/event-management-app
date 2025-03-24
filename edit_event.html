@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let today = new Date().toISOString().split("T")[0];
+            document.getElementById("date").setAttribute("min", today);
+        });
+    </script>
+</head>
+<body>
+
+<div class="form-container">
+    <h2 class="header">Edit Event</h2>
+
+    <form method="POST" class="event-form">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="{{ event.title }}" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>{{ event.description }}</textarea>
+
+        <div class="date-time-container">
+            <div class="date-container">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" value="{{ event.date }}" required>
+            </div>
+            <div class="time-container">
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" value="{{ event.time }}" required>
+            </div>
+        </div>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" value="{{ event.location }}" required>
+
+        <div class="button-container">
+            <button type="submit" class="btn blue">Save Changes</button>
+            <a href="{{ url_for('events.event_list') }}" class="btn gray">Cancel</a>
+        </div>
+    </form>
+
+    <!-- Centered "Back to Events" Button -->
+    <div class="back-button-container">
+        <a href="{{ url_for('events.event_list') }}" class="btn back-button">Back to Events</a>
+    </div>
+</div>
+
+</body>
+</html>

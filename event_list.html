@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="event-container">
+    <!-- Centered Header -->
+    <h2 class="header">Event Management</h2>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- No events message -->
+    {% if not events %}
+        <p class="no-events">No events found.</p>
+    {% else %}
+        <table class="event-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.time }}</td>
+                    <td>{{ event.location }}</td>
+                    <td class="action-buttons">
+                        <a href="{{ url_for('events.edit_event', event_id=event.id) }}" class="btn blue">Edit</a>
+                        <form method="POST" action="{{ url_for('events.delete_event', event_id=event.id) }}" class="delete-form">
+                            <button type="submit" class="btn red">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <!-- Buttons Section -->
+    <div class="button-container">
+        <a href="{{ url_for('events.add_event') }}" class="btn green">Add Event</a>
+        <a href="{{ url_for('auth.logout') }}" class="btn red">Logout</a>
+    </div>
+</div>
+
+</body>
+</html>
